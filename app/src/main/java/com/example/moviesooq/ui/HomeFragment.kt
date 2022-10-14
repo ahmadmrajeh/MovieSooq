@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.datascources.realm_db.MoviesRealm
 import com.example.datascources.util.NetworkResult
 import com.example.moviesooq.databinding.FragmentHomeBinding
 import com.example.moviesooq.ui.viewModels.HomeViewModel
+import com.example.moviesooq.ui.viewModels.MovieRealmRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +22,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+    private lateinit var mAdapter: MovieRealmRecyclerViewAdapter
     private lateinit var binding:FragmentHomeBinding
+   // private val mAdapter by lazy { MovieRealmRecyclerViewAdapter() }
     private lateinit var viewModel: HomeViewModel
 
 
@@ -44,15 +48,20 @@ class HomeFragment : Fragment() {
 
             lifecycleScope.launch(Dispatchers.IO){
                 val db = Realm.getDefaultInstance()
-                Log.e("inserts", db.where(MoviesRealm::class.java).findFirst().toString())
-                Log.e("inserts", db.where(MoviesRealm::class.java).
-                findFirst()?.results?.get(0)?.title .toString())
+
+
+
+                  mAdapter = MovieRealmRecyclerViewAdapter(db.where(MoviesRealm::class.java)
+                    .findFirst()?.results)
 
             }
 
-
         return binding.root
     }
+    private fun setUpRecyclerView() {
 
+        binding.rv .adapter = mAdapter
+        binding.rv.layoutManager = LinearLayoutManager(requireContext())
+     }
 
 }

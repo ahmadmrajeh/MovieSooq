@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
      >
+    <data>
+
+        <variable
+            name="result"
+            type="com.example.datascources.realm_db.ResultRealm" />
+    </data>
 
 
     <com.google.android.material.card.MaterialCardView
@@ -30,7 +36,7 @@
 
             <ImageView
                 android:id="@+id/recipeImageView"
-
+android:src="@drawable/ic_launcher_background"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop" />
@@ -38,8 +44,9 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:text="Movie Tittle" />
+                android:text="{Movie name @{result.title}" />
 
             <Space
                 android:layout_width="match_parent"
