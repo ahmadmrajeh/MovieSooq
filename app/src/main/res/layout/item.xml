@@ -34,9 +34,14 @@
             android:orientation="vertical">
 
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="6dp" />
+
             <ImageView
-                android:id="@+id/recipeImageView"
-android:src="@drawable/ic_launcher_background"
+                android:id="@+id/ImageView"
+                android:src="@drawable/ic_launcher_background"
+                loadImagesFromUrl=""
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop" />
@@ -46,7 +51,7 @@ android:src="@drawable/ic_launcher_background"
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
-                android:text="{Movie name @{result.title}" />
+                android:text="@{String.valueOf(result.title)}" />
 
             <Space
                 android:layout_width="match_parent"

@@ -16,7 +16,7 @@ class ApplicationClass: Application() {
         )
             .deleteRealmIfMigrationNeeded()
             .name("realm.db")
-            .allowQueriesOnUiThread(false)
+            .allowQueriesOnUiThread(true)
             .allowWritesOnUiThread(false)
             .build()
 

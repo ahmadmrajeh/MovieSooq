@@ -14,12 +14,12 @@ import io.realm.RealmRecyclerViewAdapter
  * for a RecyclerView to display
  * Realm objects on screen to a user.
  */
-internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<ResultRealm?>?) :
+internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<ResultRealm?>?,  listener:   ( ) -> Unit ) :
  RealmRecyclerViewAdapter<ResultRealm?,RecyclerView.ViewHolder>(data, true) {
  var TAG = "REALM_RECYCLER_ADAPTER"
-
+ var adapterListener :( ) -> Unit = listener
  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-  return    ViewHolder.fromList(parent)
+  return    ViewHolder.fromList(parent,adapterListener)
  }
 
  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
