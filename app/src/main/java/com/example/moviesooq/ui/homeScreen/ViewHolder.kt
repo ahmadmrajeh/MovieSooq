@@ -1,4 +1,4 @@
-package com.example.moviesooq.ui.viewModels
+package com.example.moviesooq.ui.homeScreen
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,12 +17,10 @@ class ViewHolder(private val bindingMainHolder: ItemBinding) :
 
 
     companion object {
-        fun fromList(parent: ViewGroup, adapterListener: () -> Unit): ViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
+        fun fromList(parent: ViewGroup): ViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context )
             val binding = ItemBinding.inflate(layoutInflater, parent, false)
-        binding.cardView.setOnClickListener {
-            adapterListener()
-        }
+
 
             return ViewHolder(binding)
         }

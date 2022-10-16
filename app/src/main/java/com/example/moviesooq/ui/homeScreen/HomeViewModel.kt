@@ -1,20 +1,15 @@
-package com.example.moviesooq.ui.viewModels
+package com.example.moviesooq.ui.homeScreen
 
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.*
-import com.example.datascources.realm_db.MoviesRealm
-import com.example.datascources.realm_db.RealmOperations
-import com.example.datascources.realm_db.ResultRealm
 import com.example.datascources.repository.Repository
 import com.example.datascources.util.NetworkResult
 import com.example.modelsmodule.MovieResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
-import io.realm.RealmList
-import io.realm.kotlin.executeTransactionAwait
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response

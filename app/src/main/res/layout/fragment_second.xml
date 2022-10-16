@@ -1,14 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?><layout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.SecondFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <variable
+            name="result"
+            type="com.example.datascources.realm_db.ResultRealm" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout></layout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/ic_launcher_background"
+            tools:ignore="ImageContrastCheck" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(result.title)}"
+            android:textAlignment="center"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(result.overview)}"
+
+            android:textSize="18sp" />
+
+    </LinearLayout></layout>
