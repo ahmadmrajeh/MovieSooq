@@ -24,7 +24,7 @@ internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<Result
 
  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
   val obj = getItem(position)
-  Log.i(TAG, "Binding view holder: ${obj!!.title}")
+  Log.i(TAG, "Binding view holder: ${obj?.title}")
 
   (holder as ViewHolder).bind(obj)
   (holder as ViewHolder).itemView.setOnClickListener{
@@ -39,10 +39,7 @@ internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<Result
  override fun getItemId(index: Int): Long {
   return getItem(index)!!.id.toLong()
  }
- internal inner class ExampleViewHolder(var title: TextView)
-  : RecyclerView.ViewHolder(title) {
-  var data: ResultRealm? = null
- }
+
  init {
   Log.i(TAG,
    "Created RealmRecyclerViewAdapter for ${getData()!!.size} items.")

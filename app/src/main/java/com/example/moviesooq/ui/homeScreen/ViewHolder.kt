@@ -31,15 +31,13 @@ class ViewHolder(private val bindingMainHolder: ItemBinding) :
 
 
 
-    fun bind(result: ResultRealm) {
+    fun bind(result: ResultRealm?) {
         bindingMainHolder.result = result
         bindingMainHolder.executePendingBindings()
         Glide.with(itemView)
-            .load("https://image.tmdb.org/t/p/w400/"+result.poster_path)
-
+            .load("https://image.tmdb.org/t/p/w400/"+result?.poster_path)
             .into(bindingMainHolder.ImageView)
-
-Log.e("path",result.poster_path)
+Log.e("path",result?.poster_path.toString())
     }
 
 

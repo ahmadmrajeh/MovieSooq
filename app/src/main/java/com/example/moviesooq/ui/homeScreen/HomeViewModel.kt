@@ -5,13 +5,17 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.*
+import com.example.datascources.realm_db.MoviesRealm
+import com.example.datascources.realm_db.ResultRealm
 import com.example.datascources.repository.Repository
 import com.example.datascources.util.NetworkResult
 import com.example.modelsmodule.MovieResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
+import io.realm.RealmList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -25,6 +29,7 @@ class HomeViewModel@Inject constructor(
 
     /**  Retrofit  */
     var movieResponse: MutableLiveData<NetworkResult<MovieResponse>> = MutableLiveData()
+    var result: MutableLiveData<RealmList<ResultRealm>> = MutableLiveData()
 
 
     fun readMoviesList() = viewModelScope.launch {
@@ -62,6 +67,19 @@ class HomeViewModel@Inject constructor(
             repository.insertToRealm(movieResponse,db)
 
         }
+
+    }
+
+
+     fun readOfflineCache() {
+
+         viewModelScope.launch(Dispatchers.Main) {
+
+            var db: Realm=Realm.getDefaultInstance()
+            val data=db.where(MoviesRealm::class.java)?.findFirst()?.results
+            data?.let { result.postValue(it) }
+        }
+
 
     }
 
