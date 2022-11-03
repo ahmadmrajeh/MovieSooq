@@ -8,12 +8,14 @@ import androidx.lifecycle.*
 import com.example.datascources.realm_db.MoviesRealm
 import com.example.datascources.realm_db.ResultRealm
 import com.example.datascources.repository.Repository
+import com.example.datascources.util.NetworkListener
 import com.example.datascources.util.NetworkResult
 import com.example.modelsmodule.MovieResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -36,13 +38,14 @@ class HomeViewModel@Inject constructor(
         getMoviesListSafeCall( )
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun getMoviesListSafeCall() {
         movieResponse.value = NetworkResult.Loading()
         if (hasInternetConnection()) {
             try {
                 val response = repository.RetrieveMovies()
 
-                movieResponse.value = handleResponse(response)
+                movieResponse.value = NetworkListener. handleResponse(response)
 
                 val currentMoviesList =   movieResponse.value!!.data
                 if (currentMoviesList != null) {
@@ -75,37 +78,13 @@ class HomeViewModel@Inject constructor(
 
          viewModelScope.launch(Dispatchers.Main) {
 
-            var db: Realm=Realm.getDefaultInstance()
+            val db: Realm=Realm.getDefaultInstance()
             val data=db.where(MoviesRealm::class.java)?.findFirst()?.results
-            data?.let { result.postValue(it) }
-        }
-
-
-    }
-
-
-    private fun handleResponse(response: Response<MovieResponse>): NetworkResult<MovieResponse> {
-
-        when {
-            response.message().toString().contains("timeout") -> {
-                return  NetworkResult.Error("Timeout")
-            }
-            response.code() == 402 -> {
-                return  NetworkResult.Error("API Key Limited.")
-            }
-            response.body()!!.results.isEmpty() -> {
-                return  NetworkResult.Error("List of Movies not found.")
-            }
-            response.isSuccessful -> {
-
-                return  NetworkResult.Success(response.body()!!)
-            }
-            else -> {
-                return NetworkResult.Error(response.message())
+            data?.let { result.postValue(it)
             }
         }
-    }
 
+    }
 
 
     private fun hasInternetConnection(): Boolean {
@@ -123,7 +102,6 @@ class HomeViewModel@Inject constructor(
             else -> false
         }
     }
-
 
 
 }

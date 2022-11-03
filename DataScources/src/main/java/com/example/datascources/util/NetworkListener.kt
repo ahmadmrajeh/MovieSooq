@@ -4,8 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
+import com.example.modelsmodule.MovieResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import retrofit2.Response
 
 @ExperimentalCoroutinesApi
 class NetworkListener : ConnectivityManager.NetworkCallback() {
@@ -53,4 +55,33 @@ class NetworkListener : ConnectivityManager.NetworkCallback() {
     override fun onLost(network: Network) {
         isNetworkAvailable.value = false
     }
+
+
+    companion object {
+        @JvmStatic
+        fun handleResponse(response: Response<MovieResponse>): NetworkResult<MovieResponse> {
+
+            when {
+                response.message().toString().contains("timeout") -> {
+                    return NetworkResult.Error("Timeout")
+                }
+
+                response.code() == 402 -> {
+                    return NetworkResult.Error("API Key Limited.")
+                }
+                response.body()!!.results.isEmpty() -> {
+                    return NetworkResult.Error("List of Movies not found.")
+                }
+                response.isSuccessful -> {
+
+                    return NetworkResult.Success(response.body()!!)
+                }
+                else -> {
+                    return NetworkResult.Error(response.message())
+                }
+            }
+        }
+
+    }
+
 }

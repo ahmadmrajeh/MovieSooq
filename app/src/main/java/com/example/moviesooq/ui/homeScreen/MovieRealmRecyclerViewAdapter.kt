@@ -3,8 +3,7 @@ package com.example.moviesooq.ui.homeScreen
 
 import android.util.Log
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+ import androidx.recyclerview.widget.RecyclerView
 import com.example.datascources.realm_db.ResultRealm
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -14,6 +13,7 @@ import io.realm.RealmRecyclerViewAdapter
  * for a RecyclerView to display
  * Realm objects on screen to a user.
  */
+
 internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<ResultRealm?>?,  listener:   ( id: Int) -> Unit ) :
  RealmRecyclerViewAdapter<ResultRealm?,RecyclerView.ViewHolder>(data, true) {
  var TAG = "REALM_RECYCLER_ADAPTER"
@@ -21,6 +21,7 @@ internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<Result
  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
   return    ViewHolder.fromList(parent)
  }
+
 
  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
   val obj = getItem(position)
@@ -41,7 +42,6 @@ internal class MovieRealmRecyclerViewAdapter(data: OrderedRealmCollection<Result
  }
 
  init {
-  Log.i(TAG,
-   "Created RealmRecyclerViewAdapter for ${getData()!!.size} items.")
+  Log.i(TAG, "Created RealmRecyclerViewAdapter for ${getData()!!.size} items.")
  }
 }
